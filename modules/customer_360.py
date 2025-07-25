@@ -102,7 +102,6 @@ def run():
     rel_summary.index.name = "S.No."
     st.dataframe(rel_summary, use_container_width=True)
 
-
     st.markdown("---")
 
     # ---- AI Recommendations
@@ -142,12 +141,10 @@ def run():
         })
 
     if ai_recos:
-        ai_df = pd.DataFrame(ai_recos)
-        ai_df = ai_df.reset_index(drop=True)
-    ai_df.index += 1
-    ai_df.index.name = "S.No."
-    st.dataframe(ai_df, use_container_width=True)
-
+        ai_df = pd.DataFrame(ai_recos).reset_index(drop=True)
+        ai_df.index += 1
+        ai_df.index.name = "S.No."
+        st.dataframe(ai_df, use_container_width=True)
     else:
         st.info("No AI-based recommendations triggered for this client.")
 
@@ -156,7 +153,6 @@ def run():
     # ---- Product Records
     with st.expander("View Detailed Product Records"):
         product_df = client_core.reset_index(drop=True)
-    product_df.index += 1
-    product_df.index.name = "S.No."
-    st.dataframe(product_df, use_container_width=True)
-
+        product_df.index += 1
+        product_df.index.name = "S.No."
+        st.dataframe(product_df, use_container_width=True)
