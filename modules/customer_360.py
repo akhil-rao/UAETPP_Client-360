@@ -97,7 +97,11 @@ def run():
     rel_summary = client_core.groupby("Bank")["Products Used"].apply(
         lambda x: ", ".join(sorted(set(x)))
     ).reset_index().rename(columns={"Products Used": "Products Held"})
-    st.dataframe(rel_summary.reset_index(drop=True), use_container_width=True)
+    rel_summary = rel_summary.reset_index(drop=True)
+    rel_summary.index += 1
+    rel_summary.index.name = "S.No."
+    st.dataframe(rel_summary, use_container_width=True)
+
 
     st.markdown("---")
 
