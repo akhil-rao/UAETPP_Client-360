@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+
 
 def run():
     st.set_page_config(page_title="Customer 360 View", layout="wide")
@@ -8,20 +10,7 @@ def run():
     # ---- Load Data
     @st.cache_data
     def load_data():
-        lifestyle = pd.DataFrame([
-            {"UAE ID": "784-1234-567890-1", "Client Name": "Fatima Al Mansouri", "Nationality": "UAE",
-             "Property Location": "Dubai Marina", "Property Value": 3100000, "Utility Bill": 1450,
-             "Medical Insurance": "None", "Credit Card Activity": "Air Tickets"},
-            {"UAE ID": "784-9876-543210-2", "Client Name": "Omar Al Fardan", "Nationality": "Expat",
-             "Property Location": "Sharjah Al Khan", "Property Value": 1200000, "Utility Bill": 650,
-             "Medical Insurance": "Yes", "Credit Card Activity": "Online Shopping"},
-            {"UAE ID": "784-2468-135790-3", "Client Name": "Salim Khan", "Nationality": "Expat",
-             "Property Location": "Business Bay", "Property Value": 2150000, "Utility Bill": 980,
-             "Medical Insurance": "None", "Credit Card Activity": "Dining"},
-            {"UAE ID": "784-3698-147025-4", "Client Name": "Laila Hassan", "Nationality": "UAE",
-             "Property Location": "Abu Dhabi Saadiyat", "Property Value": 5800000, "Utility Bill": 1950,
-             "Medical Insurance": "Yes", "Credit Card Activity": "Travel"}
-        ])
+        lifestyle = pd.read_csv("data/enhanced_client_profile.csv")
         usage = pd.read_csv("data/multi_bank_profile.csv")
         return usage, lifestyle
 
@@ -36,10 +25,29 @@ def run():
     client_name = client_life["Client Name"]
     bank_count = client_core["Bank"].nunique()
 
+    # ---- Client Header
+    st.markdown("### 👤 Client Overview")
+    top1, top2, top3 = st.columns(3)
+    with top1:
+        st.markdown(f"**Client Name:** {client_name}")
+        st.markdown(f"**UAE ID:** {selected_id}")
+    with top2:
+        st.markdown(f"**Nationality:** {client_life['Nationality']}")
+        st.markdown(f"**Medical Insurance:** {client_life['Medical Insurance']}")
+    with top3:
+        st.markdown(f"**Property:** {client_life['Property Location']} – AED {client_life['Property Value']:,}")
+        st.markdown(f"**Utility Bill:** AED {client_life['Utility Bill']}")
+
+    # ---- Product Summary
+    st.markdown("### 💼 Product Summary")
+    ps1, ps2, ps3 = st.columns(3)
+    ps1.metric("Accounts Held", client_core[client_core['Products Used'].str.contains("Account")].shape[0])
+    ps2.metric("Loans", client_core[client_core['Products Used'].str.contains("Loan")].shape[0])
+    ps3.metric("Credit Cards", client_core[client_core['Products Used'].str.contains("Credit Card")].shape[0])
+
     # ---- Risk Profiling Logic
     score = 0
     reasons = []
-
     if client_life["Nationality"] == "Expat":
         score += 2
         reasons.append("Expat profile (+2)")
@@ -63,24 +71,8 @@ def run():
     else:
         risk_level = "Low"
 
-    # ---- Client Summary
-    st.markdown("### Client Summary")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write(f"**Client Name:** {client_name}")
-        st.write(f"**UAE ID:** {selected_id}")
-        st.write(f"**Nationality:** {client_life['Nationality']}")
-        st.write(f"**Medical Insurance:** {client_life['Medical Insurance']}")
-    with col2:
-        st.write(f"**Property Location:** {client_life['Property Location']}")
-        st.write(f"**Property Value:** AED {client_life['Property Value']:,}")
-        st.write(f"**Utility Bill:** AED {client_life['Utility Bill']}")
-        st.write(f"**Credit Card Activity:** {client_life['Credit Card Activity']}")
-
-    st.markdown("---")
-
-    # ---- Risk Profile
-    st.subheader("Client Risk Profile")
+    # ---- Credit Score & Risk Signals
+    st.markdown("### 🚨 Credit & Risk Insights")
     col3, col4 = st.columns([1, 3])
     with col3:
         st.metric(label="Risk Level", value=risk_level)
@@ -93,7 +85,7 @@ def run():
     st.markdown("---")
 
     # ---- Relationship Summary
-    st.subheader("Relationship Summary Across Banks")
+    st.markdown("### 🏦 Relationship Summary Across Banks")
     rel_summary = client_core.groupby("Bank")["Products Used"].apply(
         lambda x: ", ".join(sorted(set(x)))
     ).reset_index().rename(columns={"Products Used": "Products Held"})
@@ -102,13 +94,23 @@ def run():
     rel_summary.index.name = "S.No."
     st.dataframe(rel_summary, use_container_width=True)
 
-    st.markdown("---")
+    # ---- Wallet Share
+    st.markdown("### 💰 Wallet Share by Bank")
+    wallet = client_core.groupby("Bank")["Products Used"].count()
+    wallet_percent = (wallet / wallet.sum() * 100).round(1).reset_index()
+    wallet_percent.columns = ["Bank", "% of Wallet"]
+    st.dataframe(wallet_percent, use_container_width=True)
+
+    # ---- Predictive Credit Signals
+    st.markdown("### 🔍 Predictive Risk & Credit Indicators")
+    pr1, pr2, pr3 = st.columns(3)
+    pr1.metric("# of Banks", bank_count)
+    pr2.metric("Recent Credit Inquiry", "Yes" if np.random.rand() > 0.6 else "No")
+    pr3.metric("Likely Insurance Gap", "Yes" if client_life["Medical Insurance"] == "None" else "No")
 
     # ---- AI Recommendations
-    st.subheader("AI Recommendations")
-
+    st.markdown("### 🧠 AI Recommendations")
     ai_recos = []
-
     if client_life["Medical Insurance"] == "None":
         ai_recos.append({
             "Recommendation": "Offer Medical & Critical Illness Plan",
@@ -148,7 +150,17 @@ def run():
     else:
         st.info("No AI-based recommendations triggered for this client.")
 
-    st.markdown("---")
+    # ---- RM Actions
+    st.markdown("### 📌 RM Suggested Actions")
+    ac1, ac2 = st.columns(2)
+    with ac1:
+        st.write("**Follow-ups:**")
+        st.write("- Contact client re: insurance plan")
+        st.write("- Schedule RM call to review asset mix")
+    with ac2:
+        st.write("**Next Steps:**")
+        st.write("- Generate portfolio stress test")
+        st.write("- Offer tailored credit advisory")
 
     # ---- Product Records
     with st.expander("View Detailed Product Records"):
