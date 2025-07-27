@@ -1,3 +1,4 @@
+
 import streamlit as st
 import json
 import os
@@ -24,16 +25,18 @@ def run_customer_insights():
     insights = customer['insights']
     risk_data = customer['risk']
     actions = customer['actions']
+    aum = customer.get('aum', {})
 
-    # Generate realistic avatar using randomuser.me
+    # Avatar
     gender = "men" if int(selected_id[-1], 16) % 2 == 0 else "women"
     index = int(selected_id[:2], 16) % 100
     avatar_url = f"https://randomuser.me/api/portraits/{gender}/{index}.jpg"
 
-    # --- Profile Section ---
+    # Profile Section
     col1, col2, col3 = st.columns([1.5, 3, 2])
     with col1:
-        st.image(avatar_url, caption=profile["name"], width=100)
+        st.image(avatar_url, width=100)
+        st.markdown(f"**<span style='font-size: 22px'>{profile['name']}</span>**", unsafe_allow_html=True)
         st.markdown(f"**Date of Birth:** {profile['dob']}")
         st.markdown(f"**Nationality:** {profile['nationality']}")
     with col2:
@@ -49,17 +52,19 @@ def run_customer_insights():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Savings AED", f"AED {accounts['savings_aed']:,}")
-        st.metric("USD Equivalent", f"${accounts['savings_usd']:,}")
+        st.metric("Savings USD", f"${accounts['savings_usd']:,}")
     with col2:
         st.markdown(f"**Outstanding Mortgage:** AED {accounts['mortgage_outstanding']:,}")
         st.markdown(f"**Loan Term:** {accounts['loan_term_years']} years")
         st.markdown(f"**EMI Rate:** {accounts['emi_rate']}%")
         st.markdown(f"**Next Payment:** AED {accounts['next_payment_amount']:,} ({accounts['next_payment_date']})")
     with col3:
-        st.markdown(f"**Wealth Total:** AED {accounts['wealth_total']:,}")
-        st.progress(accounts['wealth_allocation_percent'] / 100, text=f"{accounts['wealth_allocation_percent']}% Allocated")
-        for k, v in accounts['wealth_allocations'].items():
-            st.markdown(f"- {k.title()}: {v}%")
+        st.markdown("**Total AUM:**")
+        if "total" in aum:
+            st.markdown(f"AED {aum['total']:,}")
+            st.markdown(f"**Risk Alignment:** {aum['risk_alignment']}")
+        else:
+            st.markdown("_Not available_")
 
     st.markdown("### 📊 Credit Score & Risk Signals")
     col1, col2 = st.columns(2)
@@ -78,11 +83,12 @@ def run_customer_insights():
     for i, rec in enumerate(customer["recommendations"], 1):
         st.markdown(f"{i}. {rec}")
 
-    st.markdown("### 🧠 Wallet Share & Insights")
-    st.markdown(f"**Primary Bank:** {wallet['primary_bank']} ({wallet['primary_pct']}%)")
-    for bank, pct in wallet["secondary_banks"].items():
-        st.markdown(f"**Secondary:** {bank} ({pct}%)")
+    st.markdown("### 🧠 Wallet Share Analysis")
+    st.markdown(f"**Primary Bank:** {wallet['primary_bank']} ({wallet['primary_pct']}% of transactions)")
+    secondary_line = " • ".join([f"{k} ({v}%)" for k, v in wallet["secondary_banks"].items()])
+    st.markdown(f"**Secondary Accounts:** {secondary_line}")
 
+    st.markdown("### 🧩 Insights")
     for insight in insights:
         st.markdown("- " + insight)
 
