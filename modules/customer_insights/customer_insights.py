@@ -28,9 +28,10 @@ def run_customer_insights():
     aum = customer.get('aum', {})
 
     # Avatar from randomuser.me
-    gender = "men" if int(selected_id[-1], 16) % 2 == 0 else "women"
+    gender = profile.get("gender", "male").lower()
     index = int(selected_id[:2], 16) % 100
-    avatar_url = f"https://randomuser.me/api/portraits/{gender}/{index}.jpg"
+    avatar_url = f"https://randomuser.me/api/portraits/{'women' if gender == 'female' else 'men'}/{index}.jpg"
+
 
     # --- Profile Section ---
     col1, col2, col3 = st.columns([1.5, 3, 2])
