@@ -1,4 +1,3 @@
-
 import streamlit as st
 import json
 import os
@@ -26,9 +25,14 @@ def run_customer_insights():
     risk_data = customer['risk']
     actions = customer['actions']
 
+    # Generate realistic avatar using randomuser.me
+    gender = "men" if int(selected_id[-1], 16) % 2 == 0 else "women"
+    index = int(selected_id[:2], 16) % 100
+    avatar_url = f"https://randomuser.me/api/portraits/{gender}/{index}.jpg"
+
+    # --- Profile Section ---
     col1, col2, col3 = st.columns([1.5, 3, 2])
     with col1:
-        avatar_url = f"https://api.dicebear.com/7.x/thumbs/png?seed={selected_id}"
         st.image(avatar_url, caption=profile["name"], width=100)
         st.markdown(f"**Date of Birth:** {profile['dob']}")
         st.markdown(f"**Nationality:** {profile['nationality']}")
