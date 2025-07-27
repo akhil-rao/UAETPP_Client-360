@@ -31,7 +31,7 @@ def run_customer_insights():
     actions = customer.get('actions', {})
     aum = customer.get('aum', {})
 
-    # Avatar with gender awareness and hash-based uniqueness
+    # Avatar logic using gender and hashed index
     gender = profile.get("gender", "male").lower()
     index = avatar_index(selected_id)
     avatar_url = f"https://randomuser.me/api/portraits/{'women' if gender == 'female' else 'men'}/{index}.jpg"
@@ -46,7 +46,20 @@ def run_customer_insights():
     with col2:
         st.metric("Relationship Score", profile.get("relationship_score", "N/A"))
         st.metric("Status", profile.get("status", "N/A"))
-        st.metric("Segment", profile.get("segment", "N/A"))
+
+        # Segment with Tooltip
+        segment = profile.get("segment", "N/A")
+        segment_tooltips = {
+            "Private": "High-net-worth client managed under Private Banking",
+            "Priority": "Affluent client with premium benefits & RM support",
+            "Mass Affluent": "Mid-income client with growing wallet share"
+        }
+        tooltip = segment_tooltips.get(segment, "")
+        st.markdown(
+            f"**Segment:** {segment} <span title='{tooltip}'>ℹ️</span>",
+            unsafe_allow_html=True
+        )
+
     with col3:
         st.markdown("**Verified:** ✅" if profile.get("verified") else "❌")
         st.metric("Risk Level", profile.get("risk_level", "N/A"))
