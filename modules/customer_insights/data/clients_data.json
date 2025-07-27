@@ -1,0 +1,231 @@
+[
+  {
+    "uae_id": "784-1980-1234567-1",
+    "profile": {
+      "name": "Ahmad Al-Dahle",
+      "dob": "1980-04-12",
+      "nationality": "UAE",
+      "relationship_score": 783,
+      "status": "Active",
+      "segment": "ACG",
+      "verified": true,
+      "risk_level": "Low"
+    },
+    "accounts": {
+      "savings_aed": 243112,
+      "savings_usd": 76748,
+      "mortgage_outstanding": 120000,
+      "loan_term_years": 20,
+      "emi_rate": 3.5,
+      "next_payment_amount": 7800,
+      "next_payment_date": "2024-05-03"
+    },
+    "aum": {
+      "total": 320000,
+      "risk_alignment": "\u2705 Aligned"
+    },
+    "credit_score": {
+      "income_stability": 95,
+      "payment_behavior": 92,
+      "credit_management": 78,
+      "financial_resilience": 88
+    },
+    "risk_signals": {
+      "positive": [
+        "Consistent savings behavior",
+        "Regular investment contributions",
+        "Premium insurance policy payments"
+      ],
+      "warnings": []
+    },
+    "recommendations": [
+      "Personal loan or credit facilities \u2013 very high approval probability",
+      "Targeted investment plan \u2013 September is key contribution month",
+      "Premium credit card upgrade"
+    ],
+    "wallet_share": {
+      "primary_bank": "Emirates NBD",
+      "primary_pct": 63,
+      "secondary_banks": {
+        "ADCB": 15,
+        "FAB": 18
+      }
+    },
+    "insights": [
+      "Strong financial discipline and planning",
+      "Loyalty to financial service providers",
+      "Low risk of credit migration",
+      "High potential for cross-selling success"
+    ],
+    "risk": {
+      "predictive_risk_score_pct": 2.1,
+      "recommended_credit_limit": 250000,
+      "current_applied_credit": 150000,
+      "optimal_interest_rate": "Prime + 1.5%"
+    },
+    "actions": {
+      "immediate": [
+        "Approve credit application with enhanced terms",
+        "Prepare premium banking relationship pitch",
+        "Schedule RM meeting for cross-selling discussion"
+      ],
+      "medium_term": [
+        "Monitor spending pattern changes",
+        "Proactive outreach for relationship pitch",
+        "Review & increase credit facilities"
+      ]
+    }
+  },
+  {
+    "uae_id": "784-1985-2345678-2",
+    "profile": {
+      "name": "Aisha Khalid",
+      "dob": "1985-09-23",
+      "nationality": "UAE",
+      "relationship_score": 651,
+      "status": "Active",
+      "segment": "Retail",
+      "verified": true,
+      "risk_level": "Medium"
+    },
+    "accounts": {
+      "savings_aed": 172000,
+      "savings_usd": 21000,
+      "mortgage_outstanding": 78000,
+      "loan_term_years": 15,
+      "emi_rate": 4.2,
+      "next_payment_amount": 5450,
+      "next_payment_date": "2024-05-12"
+    },
+    "aum": {
+      "total": 522038,
+      "risk_alignment": "\ud83d\udfe1 Review (link)"
+    },
+    "credit_score": {
+      "income_stability": 82,
+      "payment_behavior": 75,
+      "credit_management": 70,
+      "financial_resilience": 74
+    },
+    "risk_signals": {
+      "positive": [
+        "Stable income deposits",
+        "Basic insurance coverage"
+      ],
+      "warnings": [
+        "High discretionary spend in Q2"
+      ]
+    },
+    "recommendations": [
+      "Review investment allocations",
+      "Offer savings plan with FX hedging",
+      "Upgrade personal insurance"
+    ],
+    "wallet_share": {
+      "primary_bank": "Emirates NBD",
+      "primary_pct": 63,
+      "secondary_banks": {
+        "ADCB": 15,
+        "FAB": 18
+      }
+    },
+    "insights": [
+      "Moderate diversification",
+      "Open to financial advice",
+      "Stable transaction activity",
+      "High credit card usage"
+    ],
+    "risk": {
+      "predictive_risk_score_pct": 4.3,
+      "recommended_credit_limit": 180000,
+      "current_applied_credit": 130000,
+      "optimal_interest_rate": "Prime + 2%"
+    },
+    "actions": {
+      "immediate": [
+        "Flag for investment advisory review",
+        "Send curated product pack",
+        "Monitor Q3 transactions"
+      ],
+      "medium_term": [
+        "Schedule financial health check",
+        "Align investment horizon",
+        "Set quarterly RM follow-up"
+      ]
+    }
+  },
+  {
+    "uae_id": "784-1990-3456789-3",
+    "profile": {
+      "name": "Khalid Al-Mansouri",
+      "dob": "1990-02-17",
+      "nationality": "UAE",
+      "relationship_score": 423,
+      "status": "Active",
+      "segment": "Mass Affluent",
+      "verified": true,
+      "risk_level": "High"
+    },
+    "accounts": {
+      "savings_aed": 84000,
+      "savings_usd": 3200,
+      "mortgage_outstanding": 192000,
+      "loan_term_years": 25,
+      "emi_rate": 4.9,
+      "next_payment_amount": 11200,
+      "next_payment_date": "2024-05-06"
+    },
+    "aum": {},
+    "credit_score": {
+      "income_stability": 58,
+      "payment_behavior": 49,
+      "credit_management": 38,
+      "financial_resilience": 55
+    },
+    "risk_signals": {
+      "positive": [],
+      "warnings": [
+        "Missed EMI last month",
+        "Maxed out credit line",
+        "Multiple unsecured loan applications"
+      ]
+    },
+    "recommendations": [
+      "Hold all new product approvals",
+      "Initiate proactive credit counseling",
+      "Trigger enhanced due diligence"
+    ],
+    "wallet_share": {
+      "primary_bank": "Emirates NBD",
+      "primary_pct": 63,
+      "secondary_banks": {
+        "ADCB": 15,
+        "FAB": 18
+      }
+    },
+    "insights": [
+      "Early signs of financial stress",
+      "Urgent RM intervention needed",
+      "Likely churn risk within 6 months",
+      "High need for restructuring plan"
+    ],
+    "risk": {
+      "predictive_risk_score_pct": 9.4,
+      "recommended_credit_limit": 90000,
+      "current_applied_credit": 150000,
+      "optimal_interest_rate": "Prime + 3%"
+    },
+    "actions": {
+      "immediate": [
+        "Trigger internal credit review",
+        "Suspend pre-approved offers",
+        "Send RM alert to prioritize review"
+      ],
+      "medium_term": [
+        "Monitor repayment behavior",
+        "Offer hardship restructuring plan",
+        "Escalate to collections if no improvement"
+      ]
+    }
+  }
+]
