@@ -1,0 +1,80 @@
+{
+  "profile": {
+    "name": "Ahmed Hassan",
+    "dob": "4/12/1980",
+    "nationality": "UAE",
+    "relationship_score": 85,
+    "status": "Active",
+    "segment": "ACG",
+    "verified": true,
+    "risk_level": "Low"
+  },
+  "accounts": {
+    "savings_aed": 243112,
+    "savings_usd": 76748,
+    "mortgage_outstanding": 120000,
+    "loan_term_years": 20,
+    "emi_rate": 3.5,
+    "next_payment_amount": 7800,
+    "next_payment_date": "2024-05-03",
+    "wealth_total": 500000,
+    "wealth_allocation_percent": 46,
+    "wealth_allocations": {
+      "internal": 20,
+      "pencs": 49
+    }
+  },
+  "credit_score": {
+    "income_stability": 95,
+    "payment_behavior": 92,
+    "credit_management": 78,
+    "financial_resilience": 88
+  },
+  "risk_signals": {
+    "positive": [
+      "Consistent savings behavior",
+      "Regular investment contributions",
+      "Premium insurance policy payments"
+    ],
+    "warnings": [
+      "Increased entertainment spending"
+    ]
+  },
+  "recommendations": [
+    "Personal loan / credit facilities (high approval probability)",
+    "Investment products (repeat demonstrated investment behavior every September)",
+    "Premium credit card upgrade"
+  ],
+  "wallet_share": {
+    "primary_bank": "Emirates NBD",
+    "primary_pct": 60,
+    "secondary_banks": {
+      "ADCB": 25,
+      "FAB": 12
+    }
+  },
+  "insights": [
+    "Strong financial discipline and planning",
+    "Loyalty to financial service providers",
+    "Low risk of credit migration",
+    "High potential for cross-selling success"
+  ],
+  "risk": {
+    "predictive_risk_score_pct": 2.1,
+    "recommended_credit_limit": 250000,
+    "current_applied_credit": 150000,
+    "optimal_interest_rate": "Prime + 1.5%"
+  },
+  "actions": {
+    "immediate": [
+      "Approve credit application with enhanced terms",
+      "Prepare premium banking relationship pitch",
+      "Schedule RM meeting for cross-selling discussion"
+    ],
+    "medium_term": [
+      "Monitor spending pattern changes",
+      "Proactive outreach for relationship pitch",
+      "Review & increase credit facilities"
+    ]
+  }
+}
