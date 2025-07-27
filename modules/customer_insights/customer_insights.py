@@ -28,7 +28,8 @@ def run_customer_insights():
 
     col1, col2, col3 = st.columns([1.5, 3, 2])
     with col1:
-        st.image("https://via.placeholder.com/100", caption=profile["name"], width=100)
+        avatar_url = f"https://api.dicebear.com/7.x/thumbs/png?seed={selected_id}"
+        st.image(avatar_url, caption=profile["name"], width=100)
         st.markdown(f"**Date of Birth:** {profile['dob']}")
         st.markdown(f"**Nationality:** {profile['nationality']}")
     with col2:
