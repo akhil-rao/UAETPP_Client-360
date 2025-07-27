@@ -1,6 +1,10 @@
 import streamlit as st
 import json
 import os
+import hashlib
+
+def avatar_index(uae_id):
+    return int(hashlib.sha256(uae_id.encode()).hexdigest(), 16) % 100
 
 def run_customer_insights():
     st.set_page_config(page_title="Customer Insights", layout="wide")
@@ -11,7 +15,7 @@ def run_customer_insights():
     with open(data_path, "r") as f:
         customers = json.load(f)
 
-    # UAE ID dropdown (fixed with unique key)
+    # UAE ID dropdown
     uae_ids = [cust.get("uae_id", f"Client-{i}") for i, cust in enumerate(customers)]
     selected_id = st.selectbox("Select UAE ID", uae_ids, key="customer_insights_uae_id")
 
@@ -27,11 +31,10 @@ def run_customer_insights():
     actions = customer.get('actions', {})
     aum = customer.get('aum', {})
 
-    # Avatar from randomuser.me
+    # Avatar with gender awareness and hash-based uniqueness
     gender = profile.get("gender", "male").lower()
-    index = int(selected_id[:2], 16) % 100
+    index = avatar_index(selected_id)
     avatar_url = f"https://randomuser.me/api/portraits/{'women' if gender == 'female' else 'men'}/{index}.jpg"
-
 
     # --- Profile Section ---
     col1, col2, col3 = st.columns([1.5, 3, 2])
