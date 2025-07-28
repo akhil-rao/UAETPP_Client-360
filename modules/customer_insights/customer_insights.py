@@ -6,14 +6,31 @@ import hashlib
 def avatar_index(uae_id):
     return int(hashlib.sha256(uae_id.encode()).hexdigest(), 16) % 100
 
+@st.cache_data
+def load_clients(path):
+    with open(path, "r") as f:
+        return json.load(f)
+
+def get_stars(score):
+    if score >= 90:
+        return "⭐⭐⭐⭐⭐"
+    elif score >= 75:
+        return "⭐⭐⭐⭐"
+    elif score >= 60:
+        return "⭐⭐⭐"
+    elif score >= 40:
+        return "⭐⭐"
+    elif score > 0:
+        return "⭐"
+    return "—"
+
 def run_customer_insights():
     st.set_page_config(page_title="Customer Insights", layout="wide")
     st.title("👤 Customer Insights")
 
     # Load client data
     data_path = os.path.join("modules", "customer_insights", "data", "clients_data.json")
-    with open(data_path, "r") as f:
-        customers = json.load(f)
+    customers = load_clients(data_path)
 
     # UAE ID dropdown
     uae_ids = [cust.get("uae_id", f"Client-{i}") for i, cust in enumerate(customers)]
@@ -31,7 +48,7 @@ def run_customer_insights():
     actions = customer.get('actions', {})
     aum = customer.get('aum', {})
 
-    # Avatar logic using gender and hashed index
+    # Avatar
     gender = profile.get("gender", "male").lower()
     index = avatar_index(selected_id)
     avatar_url = f"https://randomuser.me/api/portraits/{'women' if gender == 'female' else 'men'}/{index}.jpg"
@@ -63,35 +80,36 @@ def run_customer_insights():
     with col3:
         st.markdown("**Verified:** ✅" if profile.get("verified") else "❌")
         st.metric("Risk Level", profile.get("risk_level", "N/A"))
-        st.markdown("**Open Finance Tag:** ✅")
+        st.markdown("**Open Finance:** ✅")
 
     # --- Account Summary ---
     st.markdown("### 💳 Account Summary")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Savings AED", f"AED {accounts.get('savings_aed', 0):,}")
-        st.metric("Savings USD", f"${accounts.get('savings_usd', 0):,}")
+        if accounts.get("savings_usd", 0) > 0:
+            st.metric("Savings USD", f"${accounts.get('savings_usd', 0):,}")
     with col2:
         st.markdown(f"**Outstanding Mortgage:** AED {accounts.get('mortgage_outstanding', 'N/A'):,}")
         st.markdown(f"**Loan Term:** {accounts.get('loan_term_years', 'N/A')} years")
         st.markdown(f"**EMI Rate:** {accounts.get('emi_rate', 'N/A')}%")
         st.markdown(f"**Next Payment:** AED {accounts.get('next_payment_amount', 'N/A')} ({accounts.get('next_payment_date', 'N/A')})")
     with col3:
-        st.markdown("**Total AUM:**")
         if "total" in aum:
-            st.markdown(f"AED {aum.get('total', 0):,}")
+            st.markdown("**Wealth Management:**")
+            st.markdown(f"Total AUM: AED {aum.get('total', 0):,}")
             st.markdown(f"**Risk Alignment:** {aum.get('risk_alignment', 'N/A')}")
         else:
-            st.markdown("_Not available_")
+            st.markdown("**Wealth Management:** _Not available_")
 
     # --- Credit Score & Risk Signals ---
     st.markdown("### 📊 Credit Score & Risk Signals")
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown(f"- ⭐⭐⭐⭐⭐ Income Stability ({credit.get('income_stability', 0)}/100)")
-        st.markdown(f"- ⭐⭐⭐⭐ Payment Behavior ({credit.get('payment_behavior', 0)}/100)")
-        st.markdown(f"- ⭐⭐⭐ Credit Management ({credit.get('credit_management', 0)}/100)")
-        st.markdown(f"- ⭐⭐⭐⭐ Financial Resilience ({credit.get('financial_resilience', 0)}/100)")
+        st.markdown(f"- {get_stars(credit.get('income_stability', 0))} Income Stability ({credit.get('income_stability', 0)}/100)")
+        st.markdown(f"- {get_stars(credit.get('payment_behavior', 0))} Payment Behavior ({credit.get('payment_behavior', 0)}/100)")
+        st.markdown(f"- {get_stars(credit.get('credit_management', 0))} Credit Management ({credit.get('credit_management', 0)}/100)")
+        st.markdown(f"- {get_stars(credit.get('financial_resilience', 0))} Financial Resilience ({credit.get('financial_resilience', 0)}/100)")
     with col2:
         for signal in risk.get('positive', []):
             st.success("✅ " + signal)
